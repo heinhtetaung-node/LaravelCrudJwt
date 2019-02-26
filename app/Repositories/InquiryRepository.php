@@ -11,4 +11,8 @@ class InquiryRepository extends BaseRepository
 		$this->model = $inquiry;
 	}
 
+	public function getAll($param){
+		return $this->model->latest()->paginate(2);
+	}
+
 }

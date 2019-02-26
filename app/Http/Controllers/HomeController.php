@@ -3,26 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\InquiryRepository;
 
 class HomeController extends Controller
 {
+    private $inquiryRepo;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(InquiryRepository $inquiryRepo)
     {
-        $this->middleware('auth');
-    }
+        $this->inquiryRepo = $inquiryRepo;
+    } 
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $param = $request->only('page', 'limit', 'name', 'email');
+        $datas = $this->inquiryRepo->getAll($param);
+        return view('home', ['datas' => $datas, 'param' => $param]);
     }
 }

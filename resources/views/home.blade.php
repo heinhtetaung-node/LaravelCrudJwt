@@ -3,18 +3,40 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">お問い合わせ一覧</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <form action="" >
+                        <input type="text" class="" name="name" 
+                        value="{{ isset($param['name'])? $param['name'] : '' }}" />
+                        <button class="btn btn-primary" type="submit">検索</button>
+                    </form>
+                    <br>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>問い合わせ日時</th>
+                                <th>名前</th>
+                                <th>メールアドレス</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($datas as $d)
+                            <tr>
+                                <td>{{ date('Y/m/d', strtotime($d->created_at)) }}</td>
+                                <td>{{ $d->name }}</td>
+                                <td>{{ $d->email }}</td>
+                                <td><a href="{{ url('admin/inquiry/'.$d->id) }}" >詳細
+                                </a></td>
+                        @endforeach
+                        </tbody>
+                    </table>
 
-                    You are logged in!
+                    {{ $datas->appends($param)->links() }}
+
                 </div>
             </div>
         </div>
