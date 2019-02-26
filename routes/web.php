@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('inquiry');
-});
+Route::get('/', 'InquiryController@index');
 
 Auth::routes();
 
-Route::resource('/inquiry', 'InquiryController');
+Route::post('/inquiry', 'InquiryController@create')->name('inquiry.create');
+Route::get('/inquiry/confirm', 'InquiryController@confirm')->name('inquiry.confirm');
+Route::post('/inquiry/back', 'InquiryController@confirmback')->name('inquiry.confirmback');
+Route::post('/inquiry/complete', 'InquiryController@store')->name('inquiry.store');
 
 Route::get('/home', 'HomeController@index')->name('home');

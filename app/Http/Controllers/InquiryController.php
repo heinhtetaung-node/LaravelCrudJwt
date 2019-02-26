@@ -22,7 +22,7 @@ class InquiryController extends Controller
      */
     public function index()
     {
-        //
+        return view('inquiry');
     }
 
     /**
@@ -30,9 +30,29 @@ class InquiryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(InquiryRequest $request)
     {
-        //
+        $param = $request->only('name', 'email', 'gender', 'url', 'message');
+        $request->session()->flash('inquiry', $param);
+        $request->session()->keep(['inquiry']);
+        return redirect()->route('inquiry.confirm');
+    }
+
+    public function confirm(Request $request){
+        if (!$request->session()->exists('inquiry')) {
+            return redirect('/');
+        }
+        $inquiry = $request->session()->get('inquiry');
+        $request->session()->reflash();
+        return view('inquiry_confirm', ['inquiry' => $inquiry]);
+    }
+
+    public function confirmback(Request $request){
+        if (!$request->session()->exists('inquiry')) {
+            return redirect('/');
+        }
+        $inquiry = $request->session()->get('inquiry');
+        return redirect('/')->withInput($inquiry);
     }
 
     /**
@@ -41,14 +61,14 @@ class InquiryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InquiryRequest $request)
-    {        
-        $param = $request->only('name', 'email', 'gender', 'url', 'message');
-        $arr = $this->inquiryRepo->create($param);
-        if($arr['success'] == true){
-            return response()->json($arr);
+    public function store(Request $request)
+    {   
+        if (!$request->session()->exists('inquiry')) {
+            return redirect('/');
         }
-        return response()->json($arr)->setStatusCode(422);
+        $param = $request->session()->get('inquiry');        
+        $arr = $this->inquiryRepo->create($param);
+        return view('complete', ['result' => $arr]);
     }
 
     /**
