@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\InquiryRepository;
 use App\Http\Requests\InquiryRequest;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\RegisterSuccess;
 
 class InquiryController extends Controller
 {
+    use Notifiable;
+
     private $inquiryRepo;
 
     public function __construct(InquiryRepository $inquiryRepo)
@@ -68,6 +72,9 @@ class InquiryController extends Controller
         }
         $param = $request->session()->get('inquiry');        
         $arr = $this->inquiryRepo->create($param);
+        if($arr['success'] == true){
+            $this->notify(new RegisterSuccess($arr['result']));
+        }
         return view('complete', ['result' => $arr]);
     }
 
