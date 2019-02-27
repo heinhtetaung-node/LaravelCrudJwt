@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $param = $request->only('page', 'limit', 'name', 'email');
+        $param = $request->only('page', 'limit', 'name', 'email', 'sort', 'orderby', 'order');
         $datas = $this->inquiryRepo->getAll($param);
         return view('home', ['datas' => $datas, 'param' => $param]);
     }
