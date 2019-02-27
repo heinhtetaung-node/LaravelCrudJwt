@@ -22,6 +22,9 @@ class CreateInquiryTable extends Migration
             $table->string('message', 500);         
             $table->timestamps();
         });
+
+        // Full Text Index
+        DB::statement('ALTER TABLE inquiry ADD FULLTEXT fulltext_index (name)');
     }
 
     /**
