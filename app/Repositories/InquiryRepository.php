@@ -37,7 +37,8 @@ class InquiryRepository extends BaseRepository
 				$query = $query->orderBy('created_at', 'desc');
 			}
 
-			$arr = $query->paginate(2);
+			$limit = isset($param['limit'])? $param['limit'] : 20;
+			$arr = $query->paginate($limit);
 		
 		}catch(\Exception $e){
 			return ['success' => false, 'result' => []];

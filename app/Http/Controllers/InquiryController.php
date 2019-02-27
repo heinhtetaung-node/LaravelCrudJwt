@@ -30,6 +30,35 @@ class InquiryController extends Controller
     }
 
     /**
+     * Api Get api/get/summary?limit=&page=&name=&email=&order=&orderby=
+     */
+    public function getDatas(Request $request)
+    {
+        $param = $request->only('page', 'limit', 'name', 'email', 'sort', 'orderby', 'order');
+        $datas = $this->inquiryRepo->getAll($param);
+        if($datas['success'] == false){
+            return response()->json($datas);
+        }
+        $res = $datas['result'];
+        $arr = [];
+        foreach ($res as $r) {
+            $arr[] = [
+                'name' => $r->name,
+                'email' => $r->email,
+                'url' => $r->url,
+                'body' => $r->message,
+                'date' => date('m-d-Y H:i:s', strtotime($r->created_at))
+            ];
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Get Successfully',
+            'datas' => $arr,
+            'max' => $res->total()
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
