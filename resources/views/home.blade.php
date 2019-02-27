@@ -21,20 +21,19 @@ if(isset($param['order']) && $param['order'] != ''){
 if($order == ""){
     $orderby = "";
 }
-$created_order_arrow = "⯆";
+$created_order_arrow = "&#9660;"; //down
 if($order == 'created_at' && $orderby == 'asc'){
-    $created_order_arrow = "⯅";
+    $created_order_arrow = "&#9650;"; //up
 }
 if($order == 'created_at' && $orderby == 'desc'){
-    $created_order_arrow = "⯆";
+    $created_order_arrow = "&#9660;";
 }
 
-$name_order_arrow = "⯆";
 if($order == 'name' && $orderby == 'asc'){
-    $name_order_arrow = "⯅";
+    $name_order_arrow = "&#9650;";
 }
 if($order == 'name' && $orderby == 'desc'){
-    $name_order_arrow = "⯆";
+    $name_order_arrow = "&#9660;";
 }
 @endphp
 <div class="container">
@@ -57,9 +56,9 @@ if($order == 'name' && $orderby == 'desc'){
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th><a href="#" onclick="makeSort('created_at', '{{ $orderby }}')">問い合わせ日時 {{ ($order=='created_at' || $order=='')? $created_order_arrow : '' }}</a></th>
+                                <th><a href="#" onclick="makeSort('created_at', '{{ $orderby }}')">問い合わせ日時 {!! ($order=='created_at' || $order=='')? $created_order_arrow : '' !!}</a></th>
                                 <th><a href="#" onclick="makeSort('name', '{{ $orderby }}')">名前
-                                {{ ($order=='name')? $name_order_arrow : '' }}</a></th>
+                                {!! ($order=='name')? $name_order_arrow : '' !!}</a></th>
                                 <th>メールアドレス</th>
                                 <th></th>
                             </tr>
