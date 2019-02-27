@@ -30,11 +30,20 @@ class InquiryController extends Controller
     }
 
     /**
-     * Api Get api/get/summary?limit=&page=&name=&email=&order=&orderby=
+     * Api Get api/get/summary?limit=3&offset=0&name=&email=&order=&orderby=
+     * api/get/summary?limit=3&offset=3&name=&email=&order=&orderby=
+     * api/get/summary?limit=3&offset=6&name=&email=&order=&orderby=
      */
     public function getDatas(Request $request)
     {
-        $param = $request->only('page', 'limit', 'name', 'email', 'sort', 'orderby', 'order');
+        $param = $request->only('page', 'offset', 'limit', 'name', 'email', 'sort', 'orderby', 'order');
+        if(isset($param['offset']) && is_int($param['offset']) && isset($param['limit']) && is_int($param['limit']) ){
+            $param['page'] = ($param['offset']/$param['limit']) + 1;
+            $param['page'] = floor($param['page']);
+            $request->request->add(['page' => $param['page']]); //add request
+        }
+
+
         $datas = $this->inquiryRepo->getAll($param);
         if($datas['success'] == false){
             return response()->json($datas);
