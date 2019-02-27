@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@php
+<?
 $orderby = 'asc';
 $orderbyarr = ['asc','desc'];
 if(isset($param['orderby']) && $param['orderby'] != ''){
@@ -35,7 +35,7 @@ if($order == 'name' && $orderby == 'asc'){
 if($order == 'name' && $orderby == 'desc'){
     $name_order_arrow = "&#9660;";
 }
-@endphp
+?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -50,7 +50,7 @@ if($order == 'name' && $orderby == 'desc'){
                         value="{{ isset($param['email'])? $param['email'] : '' }}" />
                         <input type="hidden" id="order" name="order" value="{{ $order }}">
                         <input type="hidden" id="orderby" name="orderby" value="{{ $orderby }}">
-                        <button class="btn btn-primary" type="submit" id="search">検索</button>
+                        <button class="btn btn-primary btn-sm" type="submit" id="search">検索</button>
                     </form>
                     <br>
                     <table class="table table-hover">
@@ -64,21 +64,25 @@ if($order == 'name' && $orderby == 'desc'){
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($datas as $d)
-                            <tr>
-                                <td>{{ date('Y/m/d', strtotime($d->created_at)) }}</td>
-                                <td>{{ $d->name }}</td>
-                                <td>{{ $d->email }}</td>
-                                <td>
-                                    <a href="{{ url('admin/inquiry/'.$d->id) }}" >
-                                        <button>詳細</button>
-                                    </a>
-                                </td>
-                        @endforeach
+                        @if(sizeof($datas) > 0 )
+                            @foreach($datas as $d)
+                                <tr>
+                                    <td>{{ date('Y/m/d', strtotime($d->created_at)) }}</td>
+                                    <td>{{ $d->name }}</td>
+                                    <td>{{ $d->email }}</td>
+                                    <td>
+                                        <a href="{{ route('inquiry.detail', $d->id) }}" >
+                                            <button class="btn btn-info btn-sm">詳細</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr><td colspan="4">No datas</td></tr>
+                        @endif
                         </tbody>
-                    </table>                    
+                    </table>           
                     {{ $datas->appends($param)->links() }}
-
                 </div>
             </div>
         </div>

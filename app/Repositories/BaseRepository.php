@@ -6,7 +6,7 @@ class BaseRepository
 {
 	protected $model;
 	
-	private $defaulterr = ['success' => false, 'error' => 'db error occoured'];
+	protected $defaulterr = ['success' => false, 'error' => 'db error occoured'];
 
 	public function create($param){
 		try{

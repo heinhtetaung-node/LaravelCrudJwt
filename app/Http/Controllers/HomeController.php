@@ -28,6 +28,15 @@ class HomeController extends Controller
     {
         $param = $request->only('page', 'limit', 'name', 'email', 'sort', 'orderby', 'order');
         $datas = $this->inquiryRepo->getAll($param);
-        return view('home', ['datas' => $datas, 'param' => $param]);
+        return view('home', ['datas' => $datas['result'], 'param' => $param]);
+    }
+
+    public function detail($id)
+    {
+        $inquiry = $this->inquiryRepo->detail($id);
+        if($inquiry['success'] == false){
+            return response(view('errors.404'), 404);
+        }
+        return view('detail', ['inquiry' => $inquiry['result']]);  
     }
 }
