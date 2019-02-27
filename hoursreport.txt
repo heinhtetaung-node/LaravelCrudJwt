@@ -4,7 +4,8 @@
 6:15 hour in 27Feb
 Need
 - detail page, 7:15 right now
-- fuzzy search, 
-- Login api, list api
-- seeder factory 90 data
+- fuzzy search, 1:30 = 9hr right now
+- Login api, list api = 2hr = 11 hr 
+- seeder factory 90 data and limit to 20 = 11 hr all
+- production
 
