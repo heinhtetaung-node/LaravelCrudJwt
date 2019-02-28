@@ -37,7 +37,7 @@ class InquiryController extends Controller
     public function getDatas(Request $request)
     {
         $param = $request->only('page', 'offset', 'limit', 'name', 'email', 'sort', 'orderby', 'order');
-        if(isset($param['offset']) && is_int($param['offset']) && isset($param['limit']) && is_int($param['limit']) ){
+        if(isset($param['offset']) && is_numeric($param['offset']) && isset($param['limit']) && is_numeric($param['limit']) ){
             $param['page'] = ($param['offset']/$param['limit']) + 1;
             $param['page'] = floor($param['page']);
             $request->request->add(['page' => $param['page']]); //add request
