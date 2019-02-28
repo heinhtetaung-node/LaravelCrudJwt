@@ -1,11 +1,7 @@
-100 min right now. 26Feb 12:11
-100 + 80 min = 180 = 3 hour 26Feb 2:03
-5 hour in 26Feb
-6:15 hour in 27Feb
-Need
-- detail page, 7:15 right now
-- fuzzy search, 1:30 = 9hr right now
-- Login api, list api = 2hr = 11 hr 
-- seeder factory 90 data and limit to 20 = 11 hr all
-- production
+Total 14 hour used
+Development 			- 11 hour
+Upload to Hosting		- 1 hour
+Testing 				- 1 hour
+Documentation 			- 1 hour
 
+Total					- 14 hours
