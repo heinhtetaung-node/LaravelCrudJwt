@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<?
+@php
 $orderby = 'asc';
 $orderbyarr = ['asc','desc'];
 if(isset($param['orderby']) && $param['orderby'] != ''){
@@ -35,7 +35,7 @@ if($order == 'name' && $orderby == 'asc'){
 if($order == 'name' && $orderby == 'desc'){
     $name_order_arrow = "&#9660;";
 }
-?>
+@endphp
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
